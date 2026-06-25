@@ -1,6 +1,20 @@
 import nodemailer from "nodemailer";
 import { PASSWORD_RESET_REQUEST_TEMPLATE, VERIFICATION_EMAIL_TEMPLATE } from "./emailTemplet.js";
 
+import path from "path";
+import dotenv from "dotenv"
+
+dotenv.config();            // to get access to .env
+
+const __dirname = path.resolve();
+
+// const printEnvVariables = () => {
+//   console.log("Environment Variables:");
+//   console.log("EMAIL_USER:", process.env.EMAIL_USER);
+//   console.log("EMAIL_PASS:", process.env.EMAIL_PASS);
+// }
+// printEnvVariables(); 
+
 const transporter = nodemailer.createTransport({
   secure: true, // true for port 465, false for other ports
   host: "smtp.gmail.com",
@@ -8,8 +22,8 @@ const transporter = nodemailer.createTransport({
   // host: "smtp.e..thereal.email",
   // port: 587,
   auth: {
-    user: "appylohar@gmail.com",
-    pass: "owokzhnlqzzazxgg",
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,    
   },
 });
 
