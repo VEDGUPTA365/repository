@@ -1,8 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Quiz from "./Quiz";
-import { useAuthStore } from "../../store/authStore";
 import toast from "react-hot-toast";
 
 const backend_base_url =
@@ -11,70 +10,124 @@ const backend_base_url =
     : "/api/quiz";
 
 const MainQuizzSection = () => {
-
-  const { isUserVerified } = useAuthStore();
-  // console.log(isUserVerified);
-  
   const navigate = useNavigate();
-  const [allQuizTitle, setAllQuizTitle] = useState([]);
+  const [allQuiz, setAllQuiz] = useState([]);
   const [quizTitle, setQuizTitle] = useState("");
 
   useEffect(() => {
-    const fetchQuizTitles = async () => {
-      try {
-        const res = await axios.get(`${backend_base_url}/getquiztitle`);
-        // console.log("res: ", res.data.titles);
-        setAllQuizTitle(res.data.titles);
-      } catch (error) {
-        console.error("Error fetching quiz titles:", error);
-      }
-    };
+    axios
+      .get(`${backend_base_url}/getallquiz`)
+      .then((res) => setAllQuiz(res.data.quiz || []))
+      .catch(() => toast.error("Failed to fetch quizzes"));
+  }, []);
 
-    fetchQuizTitles(); // Call the async function
-  }, []); 
+  const handleShare = (quiz) => {
+    navigator.clipboard.writeText(`${window.location.origin}/quiz/shared/${quiz.id}`);
+    toast.success("Share link copied!");
+  };
 
-  function generateQuizWithAi (e){
-    e.preventDefault();
-    if(!isUserVerified){
-      toast.error("Please verify your email!")
-      navigate('/profile');
+  const handleBattle = (quiz) => {
+    navigate("/battle", { state: { prefillQuizId: quiz.id, prefillQuizTitle: quiz.title } });
+  };
+
+  const handleDelete = async (quiz) => {
+    if (!window.confirm(`Delete "${quiz.title}"?`)) return;
+    try {
+      await axios.delete(`${backend_base_url}/deletequiz/${encodeURIComponent(quiz.title)}`);
+      setAllQuiz(allQuiz.filter((q) => q.id !== quiz.id));
+      toast.success("Quiz deleted");
+    } catch {
+      toast.error("Failed to delete quiz");
     }
-    else
-      navigate('/quiz-with-ai')
-  }
+  };
+
+  if (quizTitle) return <Quiz topic={quizTitle} />;
 
   return (
-    <>
-      {!quizTitle ? (
-        <main className="relative flexCenter min-h-[77vh] flex-col gap-y-6 overflow-hidden">
+    <main className="min-h-[77vh] bg-white px-5 sm:px-10 py-10 max-w-5xl mx-auto w-full">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-black">Your Quizzes</h1>
+          <p className="text-sm text-gray-400 mt-1">{allQuiz.length} quiz{allQuiz.length !== 1 ? "zes" : ""} available</p>
+        </div>
+        <button
+          onClick={() => navigate("/quiz-with-ai")}
+          className="hover-cursorCSS btn-primary text-xs"
+        >
+          + Generate with AI
+        </button>
+      </div>
 
-          {/* <div className="absolute top-1/2 right-1/2 transform translate-x-1/2 translate-y-[-50%] rounded-full h-[400px] w-[400px] bg-purple-500 blur-[100px] filter opacity-70"></div> */}
-          <div className="absolute -z-20 top-0 right-0 transform translate-x-1/2 translate-y-[-40%] rounded-full h-[400px] md:h-[800px] w-[400px] md:w-[800px] bg-blue-300 blur-[100px] filter opacity-70"></div>
-          <div className="absolute -z-20 bottom-0 left-0 transform -translate-x-1/2 translate-y-[40%] rounded-full h-[400px] md:h-[800px] w-[400px] md:w-[800px] bg-purple-300 blur-[100px] filter opacity-70"></div>
-
-
-          <h2 className="font text-3xl mb-5">All Quiz</h2>
-
-          <main className="flex justify-center flex-wrap gap-x-6 gap-y-10 px-4 mx-auto max-w-[576px]">
-            {allQuizTitle.map((title, index) => (
-              <button
-                key={index}
-                onClick={() => setQuizTitle(title)} // Update quiz title here
-                // className="hover-cursorCSS p-3 bg-transparent blur-2xl rounded-xl"
-                className="hover-cursorCSS hover:scale-110 transition-all p-3 bg-transparent border border-black "
-              >
-                <span className="text-black">{title}</span>
-              </button>
-            ))}
-          </main>
-          <button onClick={generateQuizWithAi} className="hover-cursorCSS font3 scaling mt-8 ">
-            Generate a new Quiz using AI → 
+      {/* Quiz grid */}
+      {allQuiz.length === 0 ? (
+        <div className="flexCenter flex-col gap-4 py-24 text-center">
+          <span className="text-4xl">📋</span>
+          <p className="text-gray-400 text-sm">No quizzes yet. Generate one with AI!</p>
+          <button onClick={() => navigate("/quiz-with-ai")} className="hover-cursorCSS btn-primary text-xs mt-2">
+            Generate Quiz
           </button>
-        </main>
+        </div>
       ) : (
-        <Quiz topic={quizTitle} /> // Pass the correct prop
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {allQuiz.map((quiz) => (
+            <div key={quiz.id} className="group relative bg-white border border-gray-200 rounded-xl p-5 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+              {/* Delete */}
+              <button
+                onClick={() => handleDelete(quiz)}
+                className="hover-cursorCSS absolute top-3 right-3 text-gray-300 hover:text-black transition-colors opacity-0 group-hover:opacity-100 text-xs font-bold"
+                title="Delete"
+              >
+                ✕
+              </button>
+
+              {/* Title */}
+              <button
+                onClick={() => setQuizTitle(quiz.title)}
+                className="hover-cursorCSS text-left font-semibold text-black text-sm leading-snug line-clamp-2 mb-2 w-full"
+              >
+                {quiz.title}
+              </button>
+              <p className="text-xs text-gray-400 mb-4">{quiz.questions?.length || 0} questions</p>
+
+              {/* Actions */}
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setQuizTitle(quiz.title)}
+                  className="hover-cursorCSS flex-1 text-xs py-1.5 rounded-lg bg-black text-white font-medium hover:bg-gray-800 transition-colors"
+                >
+                  Play
+                </button>
+                <button
+                  onClick={() => handleShare(quiz)}
+                  className="hover-cursorCSS text-xs py-1.5 px-3 rounded-lg border border-gray-200 text-gray-600 hover:border-black hover:text-black transition-colors"
+                  title="Copy share link"
+                >
+                  🔗
+                </button>
+                <button
+                  onClick={() => handleBattle(quiz)}
+                  className="hover-cursorCSS text-xs py-1.5 px-3 rounded-lg border border-gray-200 text-gray-600 hover:border-black hover:text-black transition-colors"
+                  title="1v1 Battle"
+                >
+                  ⚔️
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
-    </>
+
+      {/* Battle shortcut */}
+      <div className="mt-10 pt-6 border-t border-gray-100 text-center">
+        <button
+          onClick={() => navigate("/battle")}
+          className="hover-cursorCSS text-sm text-gray-400 hover:text-black transition-colors"
+        >
+          ⚔️ Join an existing battle by room code →
+        </button>
+      </div>
+    </main>
   );
 };
 

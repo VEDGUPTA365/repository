@@ -1,22 +1,27 @@
 import dotenv, { config } from 'dotenv'
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import AppError from './AppError.js';
 
 dotenv.config()
 
-const api_key = process.env.GEMINI_API_KEY;
+// Support multiple API keys separated by commas
+const apiKeys = process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.split(',').map(key => key.trim()) : [];
 
-// Use your actual API key here
-const genAI = new GoogleGenerativeAI(api_key);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-const topic = "Education";
-const noOfQuest = 4;
-const level = "easy";
-
-export const generateQuizFromGemini = async (topic, level, noOfQuest) => {
+export const generateQuizFromGemini = async (topic, level, noOfQuest, pdfText = "") => {
+  if (apiKeys.length === 0) {
+    throw new AppError("No Gemini API keys found in environment variables.", 500);
+  }
+  
+  // Pick a random API key from the list
+  const randomKey = apiKeys[Math.floor(Math.random() * apiKeys.length)];
+  const genAI = new GoogleGenerativeAI(randomKey);
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
   const prompt = `
-  Generate a JSON formatted quiz about the topic "${topic}" and the level should be "${level}". The quiz must contain the following structure: 
-
+  Generate a JSON formatted quiz based on the topic or instructions: "${topic}". 
+  The difficulty level should be "${level}". 
+  ${pdfText ? `Use the following content extracted from a PDF document to generate the questions:\n\n${pdfText.substring(0, 30000)}\n\n` : ''}
+  The quiz must contain the following structure: 
+  
   - Total number of questions: ${noOfQuest}. 
   - Each question must have four options. 
   - The correct answer index must be unique for each question (i.e., different questions should have different correct answer indices). 
@@ -55,15 +60,9 @@ export const generateQuizFromGemini = async (topic, level, noOfQuest) => {
     const quiz = await model.generateContent(prompt);
     const cleanedResponse = quiz.response.text().replace(/```json|```/g, '').trim(); 
     const quizData = JSON.parse(cleanedResponse);
-
-    // console.log("resssssssss - ",quizData);
-    
     return quizData;
-
   } catch (error) {
-    console.error("Failed to generate quiz:", error); 
-    throw new Error("Quiz generation failed");
-    // return error;
+    throw new AppError(error.message || "Quiz generation failed", 500);
   }
 }
 

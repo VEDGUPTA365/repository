@@ -3,16 +3,18 @@ import Signup from "./Pages/Signup";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import Navbar from "./Components/NavBar";
-import ResetPass from "./Pages/ResetPass"
+
 
 import { Toaster } from 'react-hot-toast';
 import Footer from "./Components/Footer";
 import Profile from "./Pages/Profile";
 import { useAuthStore } from "../store/authStore";
-import { Children, useEffect } from "react";
-import Quiz from "./Pages/Quiz";
+import { useEffect } from "react";
 import MainQuizzSection from "./Pages/MainQuizzSection";
 import GenerateQuizWithAI from "./Pages/GenerateQuizWithAI";
+import SharedQuiz from "./Pages/SharedQuiz";
+import BattleLobby from "./Pages/BattleLobby";
+import BattleGame from "./Pages/BattleGame";
 
 function App() {
 
@@ -21,9 +23,6 @@ function App() {
   useEffect(() => {
     checkAuth();
   },[checkAuth])
-  
-  // console.log("error → ",error);
-  // console.log("user → ",user);
 
   // === if user is login ===
   const RedirectToHome = ({children}) => {
@@ -40,17 +39,6 @@ function App() {
       return <Navigate to='/login' replace />
     return children;
   }
-
-  // === is user verified ===
-  const ProtectedRouteVerified = ({children}) => {
-    const {isUserVerified} = useAuthStore();
-    if(!isUserVerified)
-      return <Navigate to='/profile' replace />
-    return children;
-  }
-
-
-
 
   return (
     <section className="mx-auto max-w-[1440px]">
@@ -75,8 +63,6 @@ function App() {
             </ProtectedRoute> 
             } />
 
-          {/* <Route path="/reset-password" element={<ResetPass />} /> */}
-          <Route path="/reset-password/:token" element={<ResetPass />} />
 
           {/* ============= QUIZ ============= */}
 
@@ -86,18 +72,34 @@ function App() {
             </ProtectedRoute> 
             } />
 
-
           <Route path="/quiz-with-ai" element={
-            <ProtectedRouteVerified>
+            <ProtectedRoute>
               <GenerateQuizWithAI />
-            </ProtectedRouteVerified> 
+            </ProtectedRoute> 
           } />
 
-          {/* <Route path="/quiz-with-ai" element={<GenerateQuizWithAI />} /> */}
-          {/* <Route path="/allquiz" element={<MainQuizzSection />} /> */}
-          {/* <Route path="/quiz" element={<Quiz />} /> */}
+          {/* Share link — login required to play */}
+          <Route path="/quiz/shared/:id" element={
+            <ProtectedRoute>
+              <SharedQuiz />
+            </ProtectedRoute>
+          } />
 
-          {/* ==== all other routes will naviagte to home page (*) ==== */}
+          {/* ============= BATTLE ============= */}
+
+          <Route path="/battle" element={
+            <ProtectedRoute>
+              <BattleLobby />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/battle/game" element={
+            <ProtectedRoute>
+              <BattleGame />
+            </ProtectedRoute>
+          } />
+
+          {/* ==== all other routes will navigate to home page (*) ==== */}
           <Route path="*" element={<Navigate to="/" replace />} />
           
         </Routes>

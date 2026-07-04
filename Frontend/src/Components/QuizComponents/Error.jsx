@@ -1,8 +1,10 @@
 import React from 'react'
 
-const Error = () => {
+const Error = ({ errorMsg }) => {
   return (
-    <main className="text-red-500 font-bold">There was an Error in fetching Questions</main>
+    <main className="text-red-500 font-bold">
+      {errorMsg || "There was an Error in fetching Questions"}
+    </main>
   )
 }
 

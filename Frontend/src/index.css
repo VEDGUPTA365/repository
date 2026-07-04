@@ -1,173 +1,187 @@
-/* Google fonts */
-@import url("https://fonts.googleapis.com/css2?family=Zeyada&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Space+Mono&display=swap");
-
-@import url("https://fonts.googleapis.com/css2?family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap");
-
-@import url("https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap");
-
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+/* Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ── Reset & Base ──────────────────────────────────────── */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* font-family: 'Zeyada', cursive; */
+}
 
-  font-family: "Playwrite GB S", cursive;
-  font-optical-sizing: auto;
-  font-weight: 300;
-  font-style: normal;
-
-  /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
-
-  /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
-
-  /* font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
+:root {
+  --black: #0a0a0a;
+  --white: #ffffff;
+  --gray-50:  #f9f9f9;
+  --gray-100: #f2f2f2;
+  --gray-200: #e5e5e5;
+  --gray-300: #d4d4d4;
+  --gray-400: #a3a3a3;
+  --gray-500: #737373;
+  --gray-700: #404040;
+  --gray-900: #171717;
 }
 
 body {
-  font-family: Marcellus;
-
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="1" d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z"></path></svg>')
-      0 0,
-    auto; /* The numbers indicate the hotspot position */
-}
-
-/* ==== add this class to change hover: cursor also  */
-.hover-cursorCSS:hover {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="1" stroke-linejoin="round" d="M10 11V8.99c0-.88.59-1.64 1.44-1.86h.05A1.99 1.99 0 0 1 14 9.05V12v-2c0-.88.6-1.65 1.46-1.87h.05A1.98 1.98 0 0 1 18 10.06V13v-1.94a2 2 0 0 1 1.51-1.94h0A2 2 0 0 1 22 11.06V14c0 .6-.08 1.27-.21 1.97a7.96 7.96 0 0 1-7.55 6.48 54.98 54.98 0 0 1-4.48 0 7.96 7.96 0 0 1-7.55-6.48C2.08 15.27 2 14.59 2 14v-1.49c0-1.11.9-2.01 2.01-2.01h0a2 2 0 0 1 2.01 2.03l-.01.97v-10c0-1.1.9-2 2-2h0a2 2 0 0 1 2 2V11Z"></path></svg>')
-      0 0,
-    auto; /* Adjust hotspot as needed */
-}
-
-/* ========= FLEX ========= */
-
-.flexCenter {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.flexBetween {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-
-/* ========= gradient text and bg ========= */
-
-.font1 {
-  font-family: "Nerko One", cursive;
-  font-weight: 600;
-  font-style: normal;
-
-  background: linear-gradient(45deg, #000000, #aeaeaee0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.font {
-  font-family: "Black Ops One", system-ui;
+  font-family: "Inter", sans-serif;
   font-weight: 400;
-  font-style: normal;
+  background-color: var(--white);
+  color: var(--black);
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="1.5" d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z"/></svg>') 0 0, auto;
+}
 
-  background: linear-gradient(30deg, #000, #aeaeaee0 10%, #000000);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.hover-cursorCSS:hover {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="%23000" stroke="%23fff" stroke-width="1.5" stroke-linejoin="round" d="M10 11V8.99c0-.88.59-1.64 1.44-1.86h.05A1.99 1.99 0 0 1 14 9.05V12v-2c0-.88.6-1.65 1.46-1.87h.05A1.98 1.98 0 0 1 18 10.06V13v-1.94a2 2 0 0 1 1.51-1.94h0A2 2 0 0 1 22 11.06V14c0 .6-.08 1.27-.21 1.97a7.96 7.96 0 0 1-7.55 6.48 54.98 54.98 0 0 1-4.48 0 7.96 7.96 0 0 1-7.55-6.48C2.08 15.27 2 14.59 2 14v-1.49c0-1.11.9-2.01 2.01-2.01h0a2 2 0 0 1 2.01 2.03l-.01.97v-10c0-1.1.9-2 2-2h0a2 2 0 0 1 2 2V11Z"/></svg>') 0 0, auto;
+}
+
+/* ── Layout utilities ──────────────────────────────────── */
+.flexCenter  { display: flex; align-items: center; justify-content: center; }
+.flexBetween { display: flex; align-items: center; justify-content: space-between; }
+
+/* ── Typography classes ────────────────────────────────── */
+/* Logo / brand – heavy mono */
+.logo {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  color: var(--black);
+  letter-spacing: -0.02em;
+}
+
+/* Section headings */
+.font {
+  font-family: "Inter", sans-serif;
+  font-weight: 800;
+  color: var(--black);
+  letter-spacing: -0.03em;
 }
 
 .font2 {
-  font-family: "Black Ops One", system-ui;
-  font-weight: 400;
-  font-style: normal;
-
-  background: linear-gradient(90deg, #000, #afb0b7e0, #000, #8f8f8f);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  color: var(--black);
+  letter-spacing: -0.02em;
 }
 
+/* Accent / CTA text – keeps visual punch without color */
 .font3 {
-  font-family: "Black Ops One", system-ui;
-  font-weight: 400;
-  font-style: normal;
-
-  background: linear-gradient(90deg, #e060ec, #6f51f5,#60b9ec);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  color: var(--black);
+  letter-spacing: -0.01em;
 }
 
-
-
-.logo {
-  background: linear-gradient(45deg, #8151f0, #ef41f2d2);
-  -webkit-background-clip: text; /* Clipping the background to the text */
-  -webkit-text-fill-color: transparent; /* Making the text color transparent */
-  background-clip: text; /* Clipping the background to the text for non-WebKit browsers */
-}
-
-.gradient-text1 {
-  background: linear-gradient(45deg, #ff6f61, #f051b6, #c0a7d9);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-text2 {
-  background: linear-gradient(45deg, #1221f6d5, #d438f0ed, #22c2f3);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
+/* Gradient texts → solid black/gray in B&W theme */
+.gradient-text1,
+.gradient-text2,
 .gradient-text3 {
-  background: linear-gradient(45deg, #0d50d8d5, #bc57cded, #22c2f3);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--black);
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  background-clip: unset;
 }
 
+/* ── Surfaces ──────────────────────────────────────────── */
+.card {
+  background: var(--white);
+  border: 1.5px solid var(--gray-200);
+  border-radius: 12px;
+}
+
+.card-hover {
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.card-hover:hover {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+  transform: translateY(-2px);
+}
+
+/* ── Buttons ───────────────────────────────────────────── */
+.btn-primary {
+  background: var(--black);
+  color: var(--white);
+  border: 1.5px solid var(--black);
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.15s ease;
+  letter-spacing: 0.01em;
+}
+.btn-primary:hover { background: var(--gray-900); box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
+
+.btn-secondary {
+  background: var(--white);
+  color: var(--black);
+  border: 1.5px solid var(--gray-300);
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.15s ease;
+}
+.btn-secondary:hover { border-color: var(--black); background: var(--gray-50); }
+
+/* ── Inputs ────────────────────────────────────────────── */
+.input-bw {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  background: var(--white);
+  color: var(--black);
+  transition: border-color 0.15s;
+  outline: none;
+}
+.input-bw:focus { border-color: var(--black); }
+.input-bw::placeholder { color: var(--gray-400); }
+
+/* ── Home hero background ─────────────────────────────── */
 .home-gradient {
-  background: linear-gradient(to bottom, #ffffff, #c670ff);
-  /* background: linear-gradient(to bottom, #ffffff, #aa48ebcd, #ffffff); */
-  /* box-shadow: inset 0px 20px 20px #ffffff; */
+  background: var(--white);
 }
 
+/* ── Feature cards ────────────────────────────────────── */
 .feature-shadow {
-  box-shadow: 0px 10px 30px rgba(65, 54, 217, 0.478),
-    0px -10px 30px rgba(190, 14, 199, 0.274);
-  /* overflow-hidden */
+  box-shadow: 0 1px 0 var(--gray-200);
   overflow: hidden;
 }
 
-/* ====================================== */
-
 .customshadow {
-  box-shadow: 0px 20px 40px rgba(94, 88, 211, 0.5),
-    0px -20px 40px rgba(211, 88, 205, 0.5);
+  box-shadow: 0 4px 32px rgba(0,0,0,0.08), 0 1px 0 var(--gray-200);
 }
 
+/* ── Progress bar (quiz) ──────────────────────────────── */
+progress {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--gray-200);
+  border-radius: 99px;
+  overflow: hidden;
+}
+progress::-webkit-progress-bar  { background: var(--gray-200); border-radius: 99px; }
+progress::-webkit-progress-value{ background: var(--black); border-radius: 99px; }
+progress::-moz-progress-bar     { background: var(--black); border-radius: 99px; }
 
-
+/* ── Animations ───────────────────────────────────────── */
 @keyframes scaleAnimation {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2); /* Adjust the scale factor as needed */
-  }
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.06); }
 }
+.scaling { animation: scaleAnimation 2.4s ease-in-out infinite; }
 
-.scaling {
-  animation: scaleAnimation 2s infinite; /* Change duration as needed */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
+.fade-up { animation: fadeUp 0.4s ease forwards; }
+
+/* ── Divider ──────────────────────────────────────────── */
+.divider { border-top: 1px solid var(--gray-200); }

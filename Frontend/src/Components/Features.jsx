@@ -1,73 +1,49 @@
 import React, { useState } from "react";
 
-import { BorderBeam } from "../Components/magicui/BorderBeam";
-
-// ==== all features ====
 const features = [
-  {
-    title: "AI-Generated Quizzes",
-    description:
-      "Generate quizzes effortlessly using AI. Simply choose any topic, and our intelligent system will create customized questions tailored to your needs.",
-  },
-  {
-    title: "Advanced JWT Authentication",
-    description:
-      "Utilize secure JWT authentication that includes features like email verification and password recovery. This ensures a safe and smooth user experience while managing accounts.",
-  },
-  {
-    title: "Diverse Quiz Topics",
-    description:
-      "Take quizzes on a wide range of topics. Whether you're interested in science, history, or pop culture, there's something for everyone.",
-  },
-  {
-    title: "Beginner-Friendly Interface",
-    description:
-      "Enjoy an easy-to-use interface designed for all skill levels. Even beginners can navigate the platform effortlessly and create quizzes with ease.",
-  },
-  {
-    title: "Fully Secure",
-    description:
-      "Rest assured with a fully secure platform that protects user data and privacy. Our robust security measures ensure that your information is safe at all times.",
-  },
+  { icon: "✦", title: "AI-Generated Quizzes", description: "Pick any topic or upload a PDF — our AI instantly builds a custom quiz tailored to your content." },
+  { icon: "⚔️", title: "Live 1v1 Battle", description: "Challenge a friend in real-time. Share a room code, answer simultaneously, and see who wins." },
+  { icon: "🔗", title: "Share Quizzes", description: "Copy a link to any quiz and share it instantly. Anyone with an account can play." },
+  { icon: "🔒", title: "Secure Authentication", description: "JWT-based login with cookie sessions. Your data stays safe and private." },
+  { icon: "📊", title: "Instant Scoring", description: "See your score, accuracy, and correct answers immediately after finishing a quiz." },
 ];
 
 const Features = () => {
-
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   return (
-    
-    <section className="py-16 px-4 bg-[#b6daeb0f]">
-    <div className="container mx-auto px-4">
-      <h2 className="text-3xl font-medium text-center mb-12 font">
-        Features
-      </h2>
+    <section className="py-20 px-6 w-full bg-gray-50 border-t border-gray-100">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-14">
+          <h2 className="text-3xl font-bold tracking-tight text-black" style={{ fontFamily: "'Inter', sans-serif" }}>
+            Everything you need
+          </h2>
+          <p className="text-gray-400 text-sm mt-3">Built for learners, creators, and competitors.</p>
+        </div>
 
-      <div className="flexCenter flex-wrap gap-10 overflow-hidden py-8">
-        {features.map((feature, index) => (
-          <div
-            key={index}
-            className={`relative p-6 rounded-lg border-2 max-w-96 px-3 duration-300 transition-all bg-white ${
-              hoveredIndex !== null && hoveredIndex !== index
-                ? "opacity-30"
-                : "opacity-100 hover:scale-110 "
-            }`}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
-          >
-            <BorderBeam />
-            <h3 className="text-xl mb-4 font-raleway font-semibold">
-              {feature.title}
-            </h3>
-            <p className="text-gray-500 leading-7 text-sm font-raleway">
-              {feature.description}
-            </p>
-          </div>
-        ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              className={`relative p-6 bg-white border border-gray-200 rounded-xl transition-all duration-200 ${
+                hoveredIndex !== null && hoveredIndex !== index
+                  ? "opacity-40"
+                  : "opacity-100 hover:shadow-md hover:-translate-y-1"
+              }`}
+            >
+              <span className="text-2xl mb-4 block">{feature.icon}</span>
+              <h3 className="font-bold text-black text-base mb-2" style={{ fontFamily: "'Inter', sans-serif" }}>
+                {feature.title}
+              </h3>
+              <p className="text-gray-500 text-sm leading-relaxed">{feature.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-  )
-}
+    </section>
+  );
+};
 
-export default Features
+export default Features;

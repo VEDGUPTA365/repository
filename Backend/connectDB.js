@@ -1,53 +1,19 @@
-import mongoose from 'mongoose';
+import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
+dotenv.config();
 
-export const connectDB = async () => {
-	try {
-		const conn = await mongoose.connect(process.env.MONGODB_URL);
-		// console.log(`MongoDB Connected: ${conn.connection.host}`);
-    return true;
-	} catch (error) {
-		console.log("Error connection to MongoDB: ", error.message);
-    return false;
-		// process.exit(1); // 1 is failure, 0 status code is success
-	}
-};
-
-
-/* conn.connection.readyState
-
-  Description: The current state of the connection. It can be:
-    0 - Disconnected
-    1 - Connected
-    2 - Connecting
-    3 - Disconnecting
-*/
-
-
-/*
-
-// Global variable to keep track of connection status
-let isConnected = false;
+export const sequelize = new Sequelize(process.env.POSTGRES_URL || 'postgres://postgres:postgres@localhost:5432/quizify', {
+  logging: false,
+});
 
 export const connectDB = async () => {
   try {
-    if (isConnected) {
-      console.log("Previously connected to DB");
-      return; // Exit early if already connected
-    }
-
-    const conn = await mongoose.connect(process.env.MONGODB_URL);
-
-    // Update the global connection status
-    isConnected = true;
-
-    console.log(`Newly connected to DB`);
-    // console.log(`Database Name → ${conn.connection.name}`);
-    // console.log(`Connection Ready State → ${conn.connection.readyState}`);
-
-  } catch (err) {
-    console.error("Error connecting to MongoDB → ", err);
-    process.exit(1);  // Exit with failure status
+    await sequelize.authenticate();
+    console.log('PostgreSQL Connected');
+    await sequelize.sync({ alter: true }); // Sync models
+    return true;
+  } catch (error) {
+    console.log("Error connection to PostgreSQL: ", error.message);
+    return false;
   }
-};
-
-*/
+};

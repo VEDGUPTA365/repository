@@ -1,19 +1,8 @@
-import mongoose from "mongoose";
+import { DataTypes } from 'sequelize';
+import { sequelize } from '../connectDB.js';
 
-// Schema for questions
-const questionSchema = new mongoose.Schema({
-    question: { type: String, required: true }, 
-    options: [{ type: String, required: true }],    
-    answer: { type: Number, required: true } 
+export const Quiz = sequelize.define('Quiz', {
+  title: { type: DataTypes.STRING, allowNull: false },
+  questions: { type: DataTypes.JSONB, defaultValue: [] },
+  createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
 });
-
-// Main quiz schema
-const quizSchema = new mongoose.Schema({
-    title: { type: String, required: true }, 
-    questions: [questionSchema],
-    createdAt: { type: Date, default: Date.now }
-});
-
-// Create the Quiz model
-export const Quiz = mongoose.models.Quiz || mongoose.model("Quiz", quizSchema);
-

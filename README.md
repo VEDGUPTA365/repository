@@ -1,153 +1,113 @@
-# [QuizifyAI → live here](https://ai-quiz-mern.onrender.com/) ✨
+# 🧠 QuizBuddy
 
-QuizifyAI — a quiz web application built using the MERN stack (MongoDB, Express, React, Node.js) with advanced JWT authentication and AI-generated quizzes through the Google Gemini API. This application allows users to take quizzes on various topics, generate quizzes using AI, and offers a secure and user-friendly experience.
+**QuizBuddy** is a modern, minimalist AI-powered quiz platform built on the **PERN Stack** (PostgreSQL, Express, React, Node.js). 
 
-<img width="1099" alt="QuizifyAI" src="https://github.com/user-attachments/assets/5d7ce235-1493-449e-81a7-a52a9fb2bb87">
-
-## Features
-
-- **Advanced JWT Authentication**: Secure user authentication with features such as email verification and password recovery.
-- **Take Quizzes on Various Topics**: Explore a wide range of topics and test your knowledge.
-- **AI-Generated Quizzes**: Generate quizzes on any topic using the Google Gemini API for an engaging learning experience.
-- **Beginner Friendly**: Easy to use interface suitable for all users, regardless of technical expertise.
-- **Fully Secure**: All user data is handled securely with best practices in mind.
-
-### Functionality
-- **Email Verification**: Confirmation emails sent upon signup.
-- **Error Handling**: Informative messages for various scenarios.
-- **Forgot Password & Reset**: Password recovery via email.
-- **Signup, Login, Logout Endpoints**: RESTful API for user management.
-- **Check Auth Endpoint**: Verifies user authentication.
-- **Sending Verification Emails**: Automated verification process.
-
-### Frontend Setup
-- **User-Friendly UI**: Responsive signup and login pages.
-- **Signup Logic**: User registration with validation.
-- **Email Verification Integration**: Activation link sent to users.
-- **Protected Routes**: Access restriction for authenticated users.
-- **Secure Login**: JWT-based session management.
-- **Forgot Password Handling**: UI for password reset requests.
-
-### Backend Setup
-- **MERN Stack**: Node.js and Express for API handling.
-- **MongoDB**: Secure storage for user and quiz data.
-- **JWT Authentication**: Secure access to protected routes.
-- **RESTful API Development**: Smooth communication between frontend and backend.
-- **Google Gemini API Integration**: AI-generated quizzes on user-defined topics.
-
-
-
-## Technologies Used
-
-- **Frontend**: React, Tailwind CSS
-- **Backend**: Node.js, Express
-- **Database**: MongoDB
-- **Authentication**: JWT (JSON Web Tokens)
-- **AI Integration**: Google Gemini API
-- **Zustand** (State Management)
-
-
-## NPM Package Details
-
-- **cookie-parser**: Middleware to parse cookies
-- **jsonwebtoken**: For generating and verifying JSON Web Tokens (JWTs)
-- **dotenv**: For managing environment variables
-- **express**: A web framework for Node.js
-- **bcryptjs**: For hashing passwords
-- **mongoose**: An Object Data Modeling (ODM) library for MongoDB
-- **nodemon**: Automatically restarts the server when file changes are detected
-- **mailtrap**: For testing email sending (if using Mailtrap)
-- **crypto**: Built-in package for cryptographic functions
-  - `randomInt(10, 20)`
-  - `randomBytes(20).toString('hex')`
+It empowers users to instantly generate highly accurate 15-question quizzes from any text prompt or uploaded PDF document using Google's **Gemini AI**. Test your knowledge, share custom quiz links with friends, or challenge them to real-time 1v1 battles in a beautiful, distraction-free black-and-white editorial interface.
 
 ---
 
-## JWT Methods
+## ✨ Features
 
-1. **`jwt.sign(payload, secretOrPrivateKey, options)`**
-   - **Purpose**: Create a new JWT.
-   - **Parameters**:
-     - `payload`: Data to include in the token (e.g., user ID, roles).
-     - `secretOrPrivateKey`: Secret key to sign the token.
-     - `options`: Optional settings (e.g., expiration time).
-   - **Usage**: Generate a token to send to clients or store for later use.
-   - **Example**:
-     ```javascript
-     const token = jwt.sign({ userId: '1234' }, 'your-secret-key', { expiresIn: '1h' });
-     ```
-
-2. **`jwt.verify(token, secretOrPublicKey, options, callback)`**
-   - **Purpose**: Check if a JWT is valid and decode it.
-   - **Parameters**:
-     - `token`: The JWT to verify.
-     - `secretOrPublicKey`: Key used to sign the token for verification.
-     - `options`: Optional settings (e.g., expected audience).
-     - `callback`: Function called with verification result or error.
-   - **Usage**: Verify token validity and extract payload if valid.
-   - **Example**:
-     ```javascript
-     jwt.verify(token, 'your-secret-key', (err, decoded) => {
-       if (err) {
-         console.error('Invalid token');
-       } else {
-         console.log('Decoded payload:', decoded);
-       }
-     });
-     ```
-
-3. **`jwt.decode(token, options)`**
-   - **Purpose**: Decode a JWT without verifying its signature.
-   - **Parameters**:
-     - `token`: The JWT to decode.
-     - `options`: Optional settings (e.g., whether to get header or payload).
-   - **Usage**: Extract and view token payload without validation. Useful for debugging.
-   - **Example**:
-     ```javascript
-     const decoded = jwt.decode(token);
-     console.log('Decoded payload:', decoded);
-     ```
+- **🤖 AI Quiz Generation:** Instantly convert any PDF notes, lectures, or text prompts into a structured 15-question multiple-choice quiz using the Gemini Flash AI model.
+- **⚔️ Live 1v1 Battles:** Challenge friends to real-time, synchronized multiplayer quiz duels powered by Socket.IO. Watch your opponent's live progress!
+- **🔗 Sharable Quizzes:** Generate secure public links to share your custom AI quizzes with anyone.
+- **🎨 Premium B&W Aesthetic:** A distraction-free, minimalist monochrome design built from scratch with custom CSS, `Inter`, and `Space Mono` typography.
+- **🔐 Secure Authentication:** Full JWT-based authentication flow with HTTP-only cookies and bcrypt password hashing.
+- **📊 Progress Tracking:** Save your generated quizzes directly to your database and review past scores.
 
 ---
 
-# Zustand Store Usage
+## 🛠️ Technology Stack
 
-Zustand is a small, fast, and scalable state management solution for React applications. It provides a simple API for managing global state with minimal boilerplate.
+**Frontend**
+- **React.js** (Vite)
+- **Zustand** (Global State Management)
+- **Tailwind CSS** (Utility classes) + Custom Vanilla CSS (Design System)
+- **React Router Dom** (Navigation)
+- **Socket.IO-client** (Real-time WebSockets)
 
-## Key Points
+**Backend**
+- **Node.js & Express.js** (REST API)
+- **PostgreSQL** (Relational Database)
+- **Sequelize** (ORM)
+- **Socket.IO** (Real-time Multiplayer Engine)
+- **Google Gemini API** (`@google/genai` for AI generation)
+- **Multer & pdf-parse** (PDF upload and text extraction)
+- **JSON Web Tokens (JWT)** (Auth & Session Management)
 
-### Creating a Store
-To create a global state store, use the `create` function from Zustand:
-```javascript
-import create from 'zustand';
+---
 
-const useCountStore = create((set) => ({
-  count: 0,
-  increaseCount: () => set((state) => ({ count: state.count + 1 })),
-}));
+## 🚀 Getting Started
 
+Follow these instructions to set up QuizBuddy on your local machine.
+
+### 1. Prerequisites
+- Node.js (v18+)
+- PostgreSQL installed and running locally
+- A free API Key from [Google Gemini (Google AI Studio)](https://aistudio.google.com/app/apikey)
+
+### 2. Clone the Repository
+```bash
+git clone https://github.com/yourusername/QuizBuddy.git
+cd QuizBuddy
 ```
 
-### Reading a state
-```javascript
-const count = useCountStore((state) => state.count);
+### 3. Backend Setup
+```bash
+cd Backend
+npm install
 ```
-
-### Updating a state
-Update the state using setState
-```javascript
-useCountStore.setState({ count: 0 });
+Create a `.env` file in the `Backend` directory:
+```env
+BACKEND_PORT=8080
+DATABASE_URL=postgres://your_pg_user:your_pg_password@localhost:5432/quizbuddy
+JWT_SECRET=your_super_secret_jwt_key
+GEMINI_API_KEY=your_google_gemini_api_key
+NODE_ENV=development
 ```
-
-Use "setState" when you want to update the state - Example -
-```javascript
-useAuthStore.setState({ forgotPassPopup: true });
+Start the backend server:
+```bash
+npm run dev
 ```
-  
-Use the "selector function" when you want to read state values - Example - 
-```javascript
-const isVisible = useAuthStore((state) => state.forgotPassPopup);
+*(The backend runs on `http://localhost:8080`)*
+
+### 4. Frontend Setup
+Open a new terminal window:
+```bash
+cd Frontend
+npm install
+npm run dev
 ```
+*(The frontend runs on `http://localhost:5173`)*
 
+---
 
+## 🎮 How to Play a 1v1 Battle
+1. Ensure both you and your friend have accounts and are logged in.
+2. Navigate to the **Battle** page.
+3. Player 1: Click **Create Room** to generate a secure Room Code.
+4. Player 2: Enter the Room Code and click **Join Room**.
+5. Once both players are in the lobby, the host can start the match! 
 
+---
+
+## 🚀 Deployment
+
+QuizBuddy is fully optimized to be deployed as a single Web Service (e.g., on Render.com) where the Express backend serves the static Vite frontend bundle.
+
+**Deployment Script:**
+```json
+// Add to a root package.json if deploying as a monorepo
+"scripts": {
+  "build": "npm run build --prefix Frontend",
+  "start": "node Backend/server.js"
+}
+```
+*Note: Make sure to set `NODE_ENV=production` in your hosting environment variables so the backend properly serves the `Frontend/dist` folder.*
+
+---
+
+<p align="center">
+  <br>
+  <i>Built with simplicity and speed in mind. Happy studying!</i>
+</p>
