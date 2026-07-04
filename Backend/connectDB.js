@@ -22,7 +22,11 @@ export const connectDB = async () => {
     await sequelize.sync({ alter: true }); // Sync models
     return true;
   } catch (error) {
-    console.log("Error connection to PostgreSQL: ", error.message);
+    const maskedUrl = dbUrl.replace(/:[^:@]*@/, ':****@');
+    console.error("=== POSTGRES CONNECTION ERROR ===");
+    console.error("Attempted to connect to:", maskedUrl);
+    console.error("Error details:", error);
+    console.error("=================================");
     return false;
   }
 };
