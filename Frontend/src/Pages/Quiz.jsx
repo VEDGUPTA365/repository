@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from "react";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Loading from "../Components/QuizComponents/Loading";
 import Error from "../Components/QuizComponents/Error";
 import Question from "../Components/QuizComponents/Question";
@@ -33,13 +33,13 @@ const Quiz = ({ topic }) => {
   const noOfQuest = questions.length;
 
   useEffect(() => {
-    fetch(`${backend_base_url}/getquizbytitle/${topic}`)
-      .then((r) => r.json())
-      .then((data) => {
-        if (!data.quiz) throw new Error(data.msg || "Failed to fetch quiz");
-        dispatch({ type: "dataReceived", payload: data.quiz.questions });
+    axios
+      .get(`${backend_base_url}/getquizbytitle/${encodeURIComponent(topic)}`)
+      .then((res) => {
+        if (!res.data.quiz) throw new Error(res.data.msg || "Failed to fetch quiz");
+        dispatch({ type: "dataReceived", payload: res.data.quiz.questions });
       })
-      .catch((err) => dispatch({ type: "dataFailed", payload: err.message }));
+      .catch((err) => dispatch({ type: "dataFailed", payload: err.response?.data?.msg || err.message }));
   }, [topic]);
 
   return (
