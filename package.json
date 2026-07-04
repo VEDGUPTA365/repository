@@ -2,7 +2,7 @@
   "name": "jwt_adv_auth",
   "version": "1.0.0",
   "description": "",
-  "main": "backed/server.js",
+  "main": "Backend/server.js",
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon Backend/server.js",
