@@ -72,10 +72,10 @@ const SharedQuiz = () => {
     <section className="flex items-center flex-col gap-y-6 max-w-[650px] mx-auto min-h-[80vh] py-10">
       {/* Back button */}
       <button
-        onClick={() => navigate("/allquiz")}
+        onClick={() => navigate("/")}
         className="self-start ml-4 text-sm text-gray-500 hover:text-gray-800 transition-colors flex items-center gap-1"
       >
-        ← Back to All Quizzes
+        ← Back to Home
       </button>
 
       <header className="font-sans font-bold text-center sm:text-5xl text-3xl gradient-text2 pb-4">
@@ -148,10 +148,10 @@ const SharedQuiz = () => {
               Restart Quiz
             </button>
             <button
-              onClick={() => navigate("/allquiz")}
+              onClick={() => navigate("/")}
               className="hover-cursorCSS p-2 px-4 bg-blue-500 text-white rounded-xl text-sm"
             >
-              All Quizzes
+              Home
             </button>
           </div>
         </div>

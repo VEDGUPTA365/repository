@@ -78,12 +78,8 @@ function App() {
             </ProtectedRoute> 
           } />
 
-          {/* Share link — login required to play */}
-          <Route path="/quiz/shared/:id" element={
-            <ProtectedRoute>
-              <SharedQuiz />
-            </ProtectedRoute>
-          } />
+          {/* Share link — public, no login required */}
+          <Route path="/quiz/shared/:id" element={<SharedQuiz />} />
 
           {/* ============= BATTLE ============= */}
 
