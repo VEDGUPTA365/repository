@@ -14,25 +14,25 @@ import {
 const router = express.Router();
 const upload = multer({ dest: "uploads/" });
 
-// ==== Share link (by ID, protected) ====
-router.get("/shared/:id", verifyToken, getQuizByIdController);
+// ==== Share link (by ID, NOT PROTECTED so friends can play) ====
+router.get("/shared/:id", getQuizByIdController);
 
 // ==== Get all quiz titles ====
-router.get("/getquiztitle", getQuizTitlesController);
+router.get("/getquiztitle", verifyToken, getQuizTitlesController);
 
 // ==== Get quiz by title ====
-router.get("/getquizbytitle/:title", getQuizByTitleController);
+router.get("/getquizbytitle/:title", verifyToken, getQuizByTitleController);
 
 // ==== Get ALL quizzes ====
-router.get("/getallquiz", getAllQuizController);
+router.get("/getallquiz", verifyToken, getAllQuizController);
 
 // ==== Create quiz manually ====
-router.post("/createquiz", createQuizController);
+router.post("/createquiz", verifyToken, createQuizController);
 
 // ==== Create quiz using Gemini AI ====
-router.post("/createquizusingai", upload.single("pdf"), createQuizUsingAI);
+router.post("/createquizusingai", verifyToken, upload.single("pdf"), createQuizUsingAI);
 
 // ==== Delete a quiz ====
-router.delete("/deletequiz/:id", deleteQuizController);
+router.delete("/deletequiz/:id", verifyToken, deleteQuizController);
 
 export default router;

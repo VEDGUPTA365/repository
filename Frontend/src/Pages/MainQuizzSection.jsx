@@ -22,7 +22,7 @@ const MainQuizzSection = () => {
   }, []);
 
   const handleShare = (quiz) => {
-    navigator.clipboard.writeText(`${window.location.origin}/quiz/shared/${quiz.id}`);
+    navigator.clipboard.writeText(`${window.location.origin}/quiz/shared/${quiz.shareToken}`);
     toast.success("Share link copied!");
   };
 
